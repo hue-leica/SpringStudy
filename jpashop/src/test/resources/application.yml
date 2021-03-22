@@ -1,0 +1,27 @@
+spring:
+#  datasource:
+#    url: jdbc:h2:tcp://localhost/~/jpashop
+#    username: sa
+#    password:
+#    driver-class-name: org.h2.Driver
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: create
+#    properties:
+#      hibernate:
+##          show_sql: true
+#        format_sql: true
+#  # devtools 설정
+#  devtools:
+#    livereload:
+#      enabled: true
+#  freemarker:
+#    cache: false
+# 이렇게 테스트코드에 있는 application.yml은 테스트 코드 실행시 우선 반영되며
+# db를 연결해주지 않게되면 알아서 h2 메모리로 실행되어서 console로 h2를 실행시키지 않아도 된다!
+logging.level:
+  org.hibernate.SQL: debug
+  #org.hibernate.type: trace
+
+
