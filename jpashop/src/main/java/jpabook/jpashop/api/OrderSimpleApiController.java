@@ -59,6 +59,7 @@ public class OrderSimpleApiController {
         return collect;
     }
 
+    /* V4는 선택에 따라 하는것이 좋다  */
     @GetMapping("/api/v4/simple-orders")
     public List<OrderSimpleQueryDto> ordersV4(){
         List<OrderSimpleQueryDto> orders = orderRepository.findOrderDtos();
