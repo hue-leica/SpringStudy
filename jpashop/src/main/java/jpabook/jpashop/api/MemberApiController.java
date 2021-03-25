@@ -53,6 +53,7 @@ public class MemberApiController {
         return memberService.findMembers();
     }
 
+    /* Entity를 직접 반환하지 말고 DTO로 반환해야 한다 */
     @GetMapping("/api/v2/members")
     public Result membersV2(){
         List<Member> members = memberService.findMembers();
