@@ -34,7 +34,7 @@ public class OrderSimpleApiController {
         return all;
     }
 
-    /* Entity가 아니라 DTO를 받아서 반환해야 한다
+    /* Entity가 아니라 DTO를 받아서 반환해야 함
     *  --> 아직 LAZY 문제는 해결하지 못한다
     *      반복 루프를 돌면서 각 데이터에 대한 member, delivery를 따로 가져와서 쿼리가 데이터 수만큼 나감
     *      --> 이것은 결과적으로 fetch join을 써서 한방쿼리로 해결해야 한다! */
