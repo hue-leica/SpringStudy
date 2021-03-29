@@ -22,12 +22,13 @@ public class MemberApiController {
     private final MemberService memberService;
 
     //=================회원 가입======================//
-    @PostMapping("/api/v1/members") // @RequestBody를 쓰면 json으로 온 데이터를 Member에알아서 매핑함
+    @PostMapping("/api/v1/members") // @RequestBody를 쓰면 json으로 온 데이터를 Member 필드에 알아서 매핑함
     public CreateMemberResponse saveMemberV1(@RequestBody @Valid Member member) {
         Long id = memberService.join(member);
         return new CreateMemberResponse(id);
     }
 
+    /* Entity의 Setter는 닫히게 설계하고 생성자를 통해 최초 설정만 가능하게 해야함 (현재는 예제라서 setter 개방) */
     /* v2의 경우 Entity의 필드가 바뀌어도 만약 setter를 닫고 생성자로 만든다면 그대로 유지가 가능함 */
     /* 그리고 DTO를 사용하면 클라이언트가 어디까지 정보를 보내주는지 바로 확인할 수 있다 */
     @PostMapping("/api/v2/members")
@@ -40,9 +41,11 @@ public class MemberApiController {
     }
 
     //=================회원 수정======================//
+    /* 참고 : 데이터의 일부 변경은 put보다는 patch나 post가 더 적절함! */
     @PutMapping("/api/v2/members/{id}")
     public UpdateMemberResponse updateMemberV2(@PathVariable("id") Long id,
                                                @RequestBody @Valid UpdateMemberRequest request){
+            /* 변경감지를 통한 변경을 하기 위해 식별자와 값을 넘겨준다 */
             memberService.update(id, request.getName());
         Member findmember = memberService.findOne(id); // 이렇게 확인을 해서 주는것이 좋음
         return new UpdateMemberResponse(findmember.getId(), findmember.getName());
