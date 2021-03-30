@@ -1,5 +1,6 @@
 package jpabook.jpashop.repository;
 
+import jpabook.jpashop.api.OrderApiController;
 import jpabook.jpashop.domain.Address;
 import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.domain.Order;
@@ -68,6 +69,17 @@ public class OrderRepository {
                 .getResultList();
     }
 
+    /* XToOne 관계는 fetch join을 사용 */
+    public List<Order> findAllWithMemberDelivery(int offset, int limit) {
+        return em.createQuery("select o from Order o" +
+                " join fetch o.member m" +
+                " join fetch o.delivery d", Order.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
+
+
     /* new 패키지명.dto(필드 하나씩 나열 필요)
     *  --> 기본적으로 Entity자체로 인식하지 않기때문에 컬럼을 모두 나열해주고 생성자를 맞춰주어야함 */
     public List<OrderSimpleQueryDto> findOrderDtos() {
@@ -78,4 +90,16 @@ public class OrderRepository {
                 .getResultList();
     }
 
+    /* 1:N관계인 테이블에서 join을 하면 당연하게 data수가 뻥튀기가 되기 때문에 distinct 처리를 반드시 해줘야 한다 */
+    public List<Order> findAllWithItem() {
+        // fetch join은 사실 연관된 테이블과 inner join을 편하게 하고, select에 모두 추가하는 것을 해주는 역할임
+        // JPA의 distinct는 객체를 대상으로 중복 제거를 하는 추가적인 기능이 있다
+        return em.createQuery(
+                "select distinct o from Order o" +
+                        " join fetch o.member m" +
+                        " join fetch o.delivery d" +
+                        " join fetch o.orderItems oi" +
+                        " join fetch oi.item i", Order.class)
+                .getResultList();
+    }
 }

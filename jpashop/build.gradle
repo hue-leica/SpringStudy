@@ -39,6 +39,8 @@ dependencies {
 	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6'
 	/* Form받는 객체 생성시 @NotEmpty속성 쓰기 위한 validation라이브러리 가져오기 */
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	/* 프록시 초기화 된 객체만 반환하는 hibernate5Module 설정 */
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
 }
 
 test {
