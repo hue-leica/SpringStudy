@@ -69,7 +69,7 @@ public class OrderRepository {
                 .getResultList();
     }
 
-    /* XToOne 관계는 fetch join을 사용 */
+    /* XToOne 관계는 fetch join을 사용으로 최적화 + 컬렉션은 hibernate batch size 옵션으로 쿼리 줄이기 */
     public List<Order> findAllWithMemberDelivery(int offset, int limit) {
         return em.createQuery("select o from Order o" +
                 " join fetch o.member m" +
