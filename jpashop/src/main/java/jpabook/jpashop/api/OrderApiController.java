@@ -32,7 +32,7 @@ public class OrderApiController {
       --> DTO를 사용하면 되지만 v1이니까 안씀, Entity에 @JsonIgnore을 써야 해결됨 */
     @GetMapping("/api/v1/orders")
     public List<Order> ordersV1(){
-        List<Order> all = orderRepository.findAll(new OrderSearch());
+        List<Order> all = orderRepository.findAllByQueryDsl(new OrderSearch());
         /* 프록시 객체들을 강제로 초기화 하는 것 */
         for (Order order : all) {
             order.getMember().getName(); // member 테이블
@@ -49,7 +49,7 @@ public class OrderApiController {
        --> N+1문제는 해결되지 않음 */
     @GetMapping("/api/v2/orders")
     public List<OrderDto> ordersV2(){
-        List<Order> orders = orderRepository.findAll(new OrderSearch());
+        List<Order> orders = orderRepository.findAllByQueryDsl(new OrderSearch());
         List<OrderDto> result = orders.stream()
                 .map(o -> new OrderDto(o))
                 .collect(Collectors.toList());

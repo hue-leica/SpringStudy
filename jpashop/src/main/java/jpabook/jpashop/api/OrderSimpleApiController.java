@@ -30,7 +30,7 @@ public class OrderSimpleApiController {
 
     @GetMapping("/api/v1/simple-orders")
     public List<Order> ordersV1() {
-        List<Order> all = orderRepository.findAll(new OrderSearch());
+        List<Order> all = orderRepository.findAllByQueryDsl(new OrderSearch());
         return all;
     }
 
@@ -40,7 +40,7 @@ public class OrderSimpleApiController {
     *      --> 이것은 결과적으로 fetch join을 써서 한방쿼리로 해결해야 한다! */
     @GetMapping("/api/v2/simple-orders")
     public List<SimpleOrderDto> ordersV2() {
-        List<Order> orders = orderRepository.findAll(new OrderSearch());
+        List<Order> orders = orderRepository.findAllByQueryDsl(new OrderSearch());
         /* 반복문을 돌면서 데이터의 개수만큼 query가 나간다 --> 비효율적 */
         List<SimpleOrderDto> collect = orders.stream()
                 .map(o -> new SimpleOrderDto(o))
