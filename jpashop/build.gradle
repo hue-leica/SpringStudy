@@ -1,8 +1,18 @@
+/* Quyery DSL */
+buildscript {
+	dependencies {
+		classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.10")
+	}
+}
+
 plugins {
 	id 'org.springframework.boot' version '2.4.3'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 }
+
+/* Quyery DSL */
+apply plugin: "com.ewerk.gradle.plugins.querydsl"
 
 group = 'jpabook'
 version = '0.0.1-SNAPSHOT'
@@ -41,8 +51,33 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	/* 프록시 초기화 된 객체만 반환하는 hibernate5Module 설정 */
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
+	/* Query DSL */
+	implementation 'com.querydsl:querydsl-jpa'
+	implementation 'com.querydsl:querydsl-apt'
 }
 
 test {
 	useJUnitPlatform()
+}
+
+//querydsl 추가
+//def querydslDir = 'src/main/generated'
+def querydslDir = "$buildDir/generated/querydsl"
+querydsl {
+	library = "com.querydsl:querydsl-apt"
+	jpa = true
+	querydslSourcesDir = querydslDir
+}
+sourceSets {
+	main {
+		java {
+			srcDirs = ['src/main/java', querydslDir]
+		}
+	}
+}
+compileQuerydsl{
+	options.annotationProcessorPath = configurations.querydsl
+}
+configurations {
+	querydsl.extendsFrom compileClasspath
 }
