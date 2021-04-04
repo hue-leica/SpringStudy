@@ -33,7 +33,7 @@ public class OrderRepository {
         return em.find(Order.class, id);
     }
 
-    /* Query DSL을 사용한 검색 */
+    /* Query DSL을 사용한 검색 기능 */
     public List<Order> findAllByQueryDsl(OrderSearch orderSearch){
         QOrder order = QOrder.order;
         QMember member = QMember.member;
