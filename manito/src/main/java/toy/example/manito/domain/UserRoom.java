@@ -26,7 +26,21 @@ public class UserRoom {
     @JoinColumn(name = "end_user_id")
     private User endUser;
 
-    @OneToMany
-    @JoinColumn(name = "mission_id")
+    @OneToMany(mappedBy = "userRoom", cascade = CascadeType.ALL)
     private List<Mission> missions = new ArrayList<>();
+
+    public UserRoom() {
+    }
+
+    public UserRoom(Room room, User startUser) {
+        this.room = room;
+        this.startUser = startUser;
+    }
+
+    public void changeEndUser(User user){
+        this.endUser = user;
+    }
+    public void addMission(Mission mission){
+        this.missions.add(mission);
+    }
 }

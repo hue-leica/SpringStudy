@@ -19,4 +19,12 @@ public class User {
 
     @OneToMany(mappedBy = "startUser")
     private List<UserRoom> userRooms = new ArrayList<>();
+
+    public User() {
+    }
+
+    public User(String name, String password) {
+        this.name = name;
+        this.password = password;
+    }
 }

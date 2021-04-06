@@ -12,8 +12,9 @@ public class UserRepository {
     @PersistenceContext
     private EntityManager em;
 
-    public void save(User user){
+    public Long save(User user){
         em.persist(user);
+        return em.find(User.class, user.getId()).getId();
     }
 
     public User findOne(Long id){
@@ -21,7 +22,8 @@ public class UserRepository {
     }
 
     public List<User> findAll(){
-        return em.createQuery("select u from User u", User.class)
+        return em.createQuery("select u" +
+                " from User u", User.class)
                 .getResultList();
     }
 
