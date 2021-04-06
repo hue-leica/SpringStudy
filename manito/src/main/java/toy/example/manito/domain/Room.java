@@ -22,4 +22,17 @@ public class Room {
 
     @OneToMany(mappedBy = "room")
     private List<UserRoom> userRooms = new ArrayList<>();
+
+    public Room() {
+    }
+
+    public Room(LocalDateTime effective_date, LocalDateTime created_date, RoomStatus roomStatus) {
+        this.effective_date = effective_date;
+        this.created_date = created_date;
+        this.roomStatus = roomStatus;
+    }
+
+    public void changeRoomStatus(RoomStatus roomStatus){
+        this.roomStatus = roomStatus;
+    }
 }
