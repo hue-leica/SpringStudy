@@ -48,7 +48,7 @@ public class Order {
         delivery.setOrder(this);
     }
 
-    // 이렇게 Entity에 생성 메서드를 만들면 나중에 생성 부분이 변경될 때 여기만 바꾸면 됨! --> 효율적
+    // 이렇게 Entity에 생성 메서드를 만들면 나중에 생성 부분이 변경될 때 여기만 바꾸면 됨! --> 효율적인 유지보수 가능
     // == 생성 메서드 == //
     public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems){
         Order order = new Order();
