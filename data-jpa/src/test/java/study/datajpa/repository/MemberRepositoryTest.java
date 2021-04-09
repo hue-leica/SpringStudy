@@ -1,5 +1,6 @@
 package study.datajpa.repository;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -41,5 +42,20 @@ public class MemberRepositoryTest {
         memberRepository.delete(member1);
         memberRepository.delete(member2);
         long deletedCount = memberRepository.count();
+    }
+    @Test
+    public void 쿼리메소드() throws Exception{
+        //given
+        Member member1 = new Member("member1", 10);
+        Member member2 = new Member("member2", 20);
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+
+        //when
+        List<Member> members = memberRepository.getByAgeGreaterThan(15);
+
+        //then
+        Assertions.assertThat(members.size()).isEqualTo(1);
+        
     }
 }
