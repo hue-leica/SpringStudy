@@ -28,4 +28,5 @@ class MemberJpaRepositoryTest {
         Assertions.assertThat(findMember).isEqualTo(member); // 하나의 트랜잭션 안에서는 같은 객체임을 보장함
     }
 
+
 }
