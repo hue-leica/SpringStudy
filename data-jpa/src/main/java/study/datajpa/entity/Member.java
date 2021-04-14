@@ -4,17 +4,12 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
 import javax.persistence.*;
 
 @Entity @Getter
 @ToString(of = {"id", "username", "age"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@NamedQuery(
-        name = "Member.findByUsername",
-        query = "select m from Member m where m.username = :username"
-)
-public class Member {
+public class Member extends BaseTimeEntity{
 
     @Id @GeneratedValue
     @Column(name = "member_id")
@@ -48,9 +43,15 @@ public class Member {
         this.age = age;
     }
 
+    /* name change */
+    public void changeUsername(String username){
+        this.username = username;
+    }
+
     /* 연관관계 메서드 */
     public void changeTeam(Team team){
         this.team = team;
         team.getMembers().add(this);
     }
+
 }
