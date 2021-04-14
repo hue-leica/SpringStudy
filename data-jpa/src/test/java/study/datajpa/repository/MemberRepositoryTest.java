@@ -12,6 +12,7 @@ import study.datajpa.dto.MemberDto;
 import study.datajpa.entity.Member;
 import study.datajpa.entity.Team;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +24,8 @@ public class MemberRepositoryTest {
 
     @Autowired MemberRepository memberRepository;
     @Autowired TeamRepository teamRepository;
+    @Autowired
+    EntityManager em;
 
     @Test
     public void basicCRUD() {
@@ -59,7 +62,7 @@ public class MemberRepositoryTest {
         List<Member> members = memberRepository.findByAgeGreaterThan(15);
         Boolean result = memberRepository.existsByAge(15);
         //List<Member> findmembers = memberRepository.findByUsername("member1");
-        Optional<Member> findmember = memberRepository.findByUsername("member3");
+        List<Member> findmember = memberRepository.findByUsername("member3");
 
         //then
         Assertions.assertThat(members.size()).isEqualTo(1);
@@ -96,5 +99,25 @@ public class MemberRepositoryTest {
         //assertThat(page.getTotalPages()).isEqualTo(2); // 전체 페이지 번호
         assertThat(page.isFirst()).isTrue(); // 첫 페이지인지 확인
         assertThat(page.hasNext()).isTrue(); // 다음 페이지가 있는지 확인
+    }
+    @Test
+    public void JpaEventBaseEntity() throws Exception{
+        //given
+        Member member1 = new Member("member1");
+        memberRepository.save(member1); // @PrePersist
+
+        Thread.sleep(100);
+        member1.changeUsername("member2");
+
+        em.flush(); // @PreUpdate
+        em.clear();
+
+        //when
+        Member member = memberRepository.findById(member1.getId()).get();
+
+        //then
+        System.out.println("member.getCreatedDate() = " + member.getCreatedDate());
+        System.out.println("member.getUpdatedDate() = " + member.getLastModifiedDate());
+
     }
 }
