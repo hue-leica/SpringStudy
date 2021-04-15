@@ -15,11 +15,10 @@ public class DataJpaApplication {
 		SpringApplication.run(DataJpaApplication.class, args);
 	}
 
-	/* 등록자 / 수정자를 자동으로 추가하는 과정 */
+	/* 등록자 / 수정자를 자동으로 처리하는 메소드를 추가하는 과정 */
 	@Bean
 	public AuditorAware<String> auditorProvider(){
 		/* 실제로는 사용자의 id를 파싱해서 넣어줘야 한다 */
 		return () -> Optional.of(UUID.randomUUID().toString());
 	}
-
 }
