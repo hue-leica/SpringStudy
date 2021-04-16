@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
+import study.datajpa.dto.UsernameOnly;
 import study.datajpa.entity.Member;
 
 import javax.persistence.QueryHint;
@@ -13,6 +14,18 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom {
+
+    /* Native Query로 조회 */
+    @Query(value = "SELECT m.member_id as id, m.username, t.name as teamName " +
+            "FROM member as m left join team t",
+            countQuery = "SELECT count(*) from member",
+            nativeQuery = true)
+    Page<UsernameOnly> findByNativeProjections(Pageable pageable);
+
+
+    /* Generic type을 줘서 동적으로 프로젝션 데이터 변경 가능 */
+    <T> List<T> findProjectionsByUsername(String username, Class<T> type);
+
 
     Page<Member> findByAge(@Param("age") int age, Pageable pageable);
 
