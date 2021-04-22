@@ -46,7 +46,7 @@ public class OrderApiController {
 
     /* 반환되는 모든 데이터를 DTO로 해주는 방식
        --> 초기화되지 않은 프록시 객체 문제 & json 무한 루프 문제는 해결됨
-       --> N+1문제는 해결되지 않음 */
+       --> N+1문제는 해결되지 않음! */
     @GetMapping("/api/v2/orders")
     public List<OrderDto> ordersV2(){
         List<Order> orders = orderRepository.findAllByQueryDsl(new OrderSearch());
