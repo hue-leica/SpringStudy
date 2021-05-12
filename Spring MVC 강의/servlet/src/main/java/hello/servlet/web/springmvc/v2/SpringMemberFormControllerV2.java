@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
-@RequestMapping("/springmvc/v2/members")
+@RequestMapping("/springmvc/v2/members") // 공통 path 지정
 public class SpringMemberFormControllerV2 {
 
     private MemberRepository memberRepository = MemberRepository.getInstance();

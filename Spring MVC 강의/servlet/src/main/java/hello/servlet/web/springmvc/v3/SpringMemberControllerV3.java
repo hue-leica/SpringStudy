@@ -8,14 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
-@RequestMapping("/springmvc/v3/members")
+@RequestMapping("/springmvc/v3/members") // 공통 path 지정
 public class SpringMemberControllerV3 {
     private MemberRepository memberRepository = MemberRepository.getInstance();
 
@@ -38,7 +34,7 @@ public class SpringMemberControllerV3 {
     }
 
     //@RequestMapping(method = RequestMethod.GET);
-    @GetMapping("/members")
+    @GetMapping("/")
     public String members(Model model){
         List<Member> members = memberRepository.findAll();
         model.addAttribute("members", members);
