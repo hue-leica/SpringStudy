@@ -5,6 +5,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +38,7 @@ public class RequestBodyStringController {
         responseWriter.write("ok");
     }
 
-    /* 추가로 HttpEntity를 상송받은 RequestEntity / ResponseEntity를 사용해도 됨 */
+    /* 추가로 HttpEntity를 상속받은 RequestEntity / ResponseEntity를 사용해도 됨 */
     @PostMapping("/request-body-string-v3")
     public HttpEntity<String> requestBodyStringV3(HttpEntity<String> httpEntity) throws IOException {
         String messageBody = httpEntity.getBody();
@@ -45,9 +46,8 @@ public class RequestBodyStringController {
         return new HttpEntity<>("ok");
     }
 
-    /* 추가로 HttpEntity를 상송받은 RequestEntity / ResponseEntity를 사용해도 됨 */
     @PostMapping("/request-body-string-v4")
-    public HttpEntity<String> requestBodyStringV4(@Requestbody String messageBody) throws IOException {
+    public HttpEntity<String> requestBodyStringV4(@RequestBody String messageBody) throws IOException {
         log.info("messageBody={}", messageBody);
         return new HttpEntity<>("ok");
     }
