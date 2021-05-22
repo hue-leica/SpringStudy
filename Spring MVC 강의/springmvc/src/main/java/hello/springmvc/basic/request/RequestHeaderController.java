@@ -33,5 +33,4 @@ public class RequestHeaderController {
         log.info("myCookie={}", cookie); // 쿠키 정보
         return "ok";
     }
-
 }

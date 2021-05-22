@@ -14,6 +14,7 @@ import java.util.Map;
 @Controller
 public class RequestParamController {
 
+    /* V1 : Servlet 객체를 통해서 값 파싱하기 */
     @RequestMapping("/request-param-v1")
     public void requestParamV1(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String username = req.getParameter("username");
@@ -22,6 +23,7 @@ public class RequestParamController {
         resp.getWriter().write("ok");
     }
 
+    /* V2 : @RequestParam을 사용해 필드와 매칭해서 받기 */
     @ResponseBody // 해당 태그를 통해 response시 바로 문자 반환됨 -- @RestController 인 것 처럼! (뷰 검사도 X)
     @RequestMapping("/request-param-v2")
     public String requestParamV2(@RequestParam("username") String memberName,
@@ -30,6 +32,7 @@ public class RequestParamController {
         return "ok";
     }
 
+    /* V3 : @RequestParam의 변수 명을 필드명과 일치시켜 생략 */
     @ResponseBody
     @RequestMapping("/request-param-v3")
     public String requestParamV3(@RequestParam String username,
@@ -38,6 +41,7 @@ public class RequestParamController {
         return "ok";
     }
 
+    /* V4 : @RequestParam 어노테이션 자체를 생략 --> 생략은 권장하지 않음 */
     @ResponseBody
     @RequestMapping("/request-param-v4")
     public String requestParamV4(String username,int age){
@@ -82,6 +86,13 @@ public class RequestParamController {
     @RequestMapping("/model-attribute-v2")
     public String modelAttributeV2(HelloData helloData){
         log.info("helloData={}", helloData); // @Data에 ToString 기능도 있어서 바로 객체 출력 가능!
+        return "ok";
+    }
+
+    /* method 속성 지정으로 HTTP method와 매핑 */
+    @RequestMapping(value = "/mapping-get", method = RequestMethod.GET)
+    public String mappingGetV1() {
+        log.info("mappingGetV1");
         return "ok";
     }
 }
